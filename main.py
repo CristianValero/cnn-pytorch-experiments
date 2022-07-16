@@ -13,8 +13,9 @@ from utils import RotMNISTDataset
 def load_datasets(rot_mnist):
     global batch_size
     if rot_mnist:
+        print('You are using ROT-MNIST dataset to train model...')
         train_data = torch.utils.data.DataLoader(RotMNISTDataset(dataset='train'), batch_size=batch_size,
-                                                   shuffle=True, num_workers=4, pin_memory=True)
+                                                 shuffle=True, num_workers=4, pin_memory=True)
     else:
         train_data = torch.utils.data.DataLoader(
             torchvision.datasets.MNIST('./data/', train=True, download=True,
@@ -146,7 +147,6 @@ def plot_evaluation_history(eval_history, title):
 
 
 if __name__ == '__main__':
-
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
     epochs = 5
