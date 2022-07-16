@@ -13,7 +13,7 @@ from utils import RotMNISTDataset
 def load_datasets(rot_mnist):
     global batch_size
     if rot_mnist:
-        print('You are using ROT-MNIST dataset to train model...')
+        print('Using ROT-MNIST dataset to train model...')
         train_data = torch.utils.data.DataLoader(RotMNISTDataset(dataset='train'), batch_size=batch_size,
                                                  shuffle=True, num_workers=4, pin_memory=True)
     else:
@@ -154,9 +154,9 @@ if __name__ == '__main__':
     momentum = 0.5  # Use this parameter with SDG optimizer.
     batch_size = 128
 
-    train_loader, test_loader = load_datasets(rot_mnist=False)
+    train_loader, test_loader = load_datasets(rot_mnist=True)
 
-    model = ModelZ2CNN().to(device)
+    model = ModelP4CNNP4().to(device)
     print_model_info()
 
     ce_loss = nn.CrossEntropyLoss()
@@ -166,4 +166,4 @@ if __name__ == '__main__':
 
     print('Evaluating model with rotated images...')
     history = evaluate_360deg()
-    plot_evaluation_history(eval_history=history, title='Z2CNN with MNIST')
+    plot_evaluation_history(eval_history=history, title='P4CNNP4 with ROT-MNIST')
