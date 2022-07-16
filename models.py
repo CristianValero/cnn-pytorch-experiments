@@ -1,5 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as functional
+
 from groupy.gconv.pytorch_gconv.splitgconv2d import P4ConvZ2, P4ConvP4
 from groupy.gconv.pytorch_gconv.pooling import plane_group_spatial_max_pooling
 from layers import ConvEq2d
@@ -29,15 +30,15 @@ class ModelZ2CNN(nn.Module):
         self.fc = nn.Linear(20, 10)
 
     def forward(self, x):
-        x = self.cnn1(x)
-        x = self.cnn2(x)
+        x = functional.relu(self.cnn1(x))
+        x = functional.relu(self.cnn2(x))
         x = self.max1(x)
         x = self.norm(x)
-        x = self.cnn3(x)
-        x = self.cnn4(x)
-        x = self.cnn5(x)
-        x = self.cnn6(x)
-        x = self.cnn7(x)
+        x = functional.relu(self.cnn3(x))
+        x = functional.relu(self.cnn4(x))
+        x = functional.relu(self.cnn5(x))
+        x = functional.relu(self.cnn6(x))
+        x = functional.relu(self.cnn7(x))
         x = x.view(x.size()[0], -1)
         x = self.fc(x)
         return x
@@ -67,16 +68,14 @@ class ModelP4CNNP4(nn.Module):
         self.fc = nn.Linear(80, 10)
 
     def forward(self, x):
-        x = self.cnn1(x)
-        x = self.cnn2(x)
+        x = functional.relu(self.cnn1(x))
+        x = functional.relu(self.cnn2(x))
         x = plane_group_spatial_max_pooling(x, 2, 2)
-        # x = self.max1(x)
-        # x = self.norm(x)
-        x = self.cnn3(x)
-        x = self.cnn4(x)
-        x = self.cnn5(x)
-        x = self.cnn6(x)
-        x = self.cnn7(x)
+        x = functional.relu(self.cnn3(x))
+        x = functional.relu(self.cnn4(x))
+        x = functional.relu(self.cnn5(x))
+        x = functional.relu(self.cnn6(x))
+        x = functional.relu(self.cnn7(x))
         x = x.view(x.size()[0], -1)
         x = self.fc(x)
         return x

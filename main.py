@@ -149,14 +149,14 @@ def plot_evaluation_history(eval_history, title):
 if __name__ == '__main__':
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    epochs = 5
+    epochs = 20
     learning_rate = 0.001
     momentum = 0.5  # Use this parameter with SDG optimizer.
     batch_size = 128
 
     train_loader, test_loader = load_datasets(rot_mnist=True)
 
-    model = ModelP4CNNP4().to(device)
+    model = ModelZ2CNN().to(device)
     print_model_info()
 
     ce_loss = nn.CrossEntropyLoss()
@@ -166,4 +166,4 @@ if __name__ == '__main__':
 
     print('Evaluating model with rotated images...')
     history = evaluate_360deg()
-    plot_evaluation_history(eval_history=history, title='P4CNNP4 with ROT-MNIST')
+    plot_evaluation_history(eval_history=history, title='Z2CNN with ROT-MNIST')
