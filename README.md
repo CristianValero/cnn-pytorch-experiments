@@ -7,11 +7,11 @@ Taco Cohen's experiments are being reproduced in this repository with the aim of
 
 Here you can see the results of evaluating the different models with the test data set rotated from -180° to 180°.
 
-| Model used          | Plot results                                                           | Details                                                                                                                     |
-|---------------------|------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
-| Z2CNN               | <img src="./evaluation/eval360Z2CNN.png" height="150" width="auto">    |                                                                                                                             |
-| Z2CNN (ROT-MNIST)   | <img src="./evaluation/eval360Z2CNNROT.png" height="150" width="auto"> |                                                                                                                             |
-| P4CNNP4             | <img src="./evaluation/eval360P4CNNP4.png" height="150" width="auto">  | It can be seen that the rotation invariance is not working properly since at angles far from 0º it has a very low hit rate. |
-| P4CNNP4 (ROT-MNIST) | <img src="" height="150" width="auto">                                 |                                                                                                                             |
+| Model used          | Plot results                                                           | Details                                                                                                                                                 |
+|---------------------|------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Z2CNN               | <img src="./evaluation/eval360Z2CNN.png" height="150" width="auto">    | The expected behavior is obtained since the layers of this model do not have equivariance, so it is normal that the maximum number of hits is around 0. |
+| Z2CNN (ROT-MNIST)   | <img src="./evaluation/eval360Z2CNNROT.png" height="150" width="auto"> | It behaves more stably at all angles while retaining peak hits. However, this is common since it has been trained with ROT-MNIST.                       |
+| P4CNNP4             | <img src="./evaluation/eval360P4CNNP4.png" height="150" width="auto">  | It can be seen that the rotation invariance is not working properly since at angles far from 0º it has a very low hit rate.                             |
+| P4CNNP4 (ROT-MNIST) | <img src="" height="150" width="auto">                                 |                                                                                                                                                         |
 
     
