@@ -154,9 +154,9 @@ if __name__ == '__main__':
     momentum = 0.5  # Use this parameter with SDG optimizer.
     batch_size = 128
 
-    train_loader, test_loader = load_datasets(rot_mnist=True)
+    train_loader, test_loader = load_datasets(rot_mnist=False)
 
-    model = ModelZ2CNN().to(device)
+    model = ModelP4CNNP4().to(device)
     print_model_info()
 
     ce_loss = nn.CrossEntropyLoss()
@@ -166,4 +166,4 @@ if __name__ == '__main__':
 
     print('Evaluating model with rotated images...')
     history = evaluate_360deg()
-    plot_evaluation_history(eval_history=history, title='Z2CNN with ROT-MNIST')
+    plot_evaluation_history(eval_history=history, title='P4CNNP4 with MNIST')
