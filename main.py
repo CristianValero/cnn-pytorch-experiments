@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
     train_loader, test_loader = load_datasets()
 
-    model = ModelP4CNNP4().to(device)
+    model = ModelZ2CNN().to(device)
     print_model_info()
 
     ce_loss = nn.CrossEntropyLoss()
@@ -161,4 +161,4 @@ if __name__ == '__main__':
 
     print('Evaluating model with rotated images...')
     history = evaluate_360deg()
-    plot_evaluation_history(eval_history=history, title='P4CNNP4 with MNIST')
+    plot_evaluation_history(eval_history=history, title='Z2CNN with MNIST')

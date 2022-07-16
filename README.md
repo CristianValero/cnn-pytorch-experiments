@@ -5,13 +5,11 @@ Taco Cohen's experiments are being reproduced in this repository with the aim of
 
 ### Results
 
-* P4CNNP4: This is the result of evaluating the P4CNNP4 model with the dataset rotated from -180º to 180º. It can be seen that the rotation invariance is not working properly 
-since at angles far from 0º it has a very low hit rate.
+Here you can see the results of evaluating the different models with the test data set rotated from -180° to 180°.
 
-    
-
-| Model used | Plot results                                             |
-|------------|----------------------------------------------------------|
+| Model used | Plot results                                             | Details                                                                                                                     |
+|------------|----------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------|
 | Z2CNN      | <img src="./evaluation/eval360P4CNNP4.png" height="300"> |
-| P4CNNP4    | <img src="./evaluation/eval360P4CNNP4.png" height="300"> |
+| P4CNNP4    | <img src="./evaluation/eval360P4CNNP4.png" height="300"> | It can be seen that the rotation invariance is not working properly since at angles far from 0º it has a very low hit rate. |
+
     
