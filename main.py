@@ -7,18 +7,23 @@ import matplotlib.pyplot as plt
 from torchvision.transforms import InterpolationMode
 from tqdm import tqdm
 from models import ModelP4CNNP4, ModelZ2CNN, ModelConvEq2D
+from utils import RotMNISTDataset
 
 
-def load_datasets():
+def load_datasets(rot_mnist):
     global batch_size
-    train_data = torch.utils.data.DataLoader(
-        torchvision.datasets.MNIST('./data/', train=True, download=True,
-                                   transform=torchvision.transforms.Compose([
-                                       torchvision.transforms.ToTensor(),
-                                       # torchvision.transforms.Normalize((0.1307,), (0.3081,))
-                                       # torchvision.transforms.Pad(7)
-                                   ])),
-        batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True)
+    if rot_mnist:
+        train_data = torch.utils.data.DataLoader(RotMNISTDataset(dataset='train'), batch_size=batch_size,
+                                                   shuffle=True, num_workers=4, pin_memory=True)
+    else:
+        train_data = torch.utils.data.DataLoader(
+            torchvision.datasets.MNIST('./data/', train=True, download=True,
+                                       transform=torchvision.transforms.Compose([
+                                           torchvision.transforms.ToTensor(),
+                                           # torchvision.transforms.Normalize((0.1307,), (0.3081,))
+                                           # torchvision.transforms.Pad(7)
+                                       ])),
+            batch_size=batch_size, shuffle=True, num_workers=8, pin_memory=True)
     test_data = torch.utils.data.DataLoader(
         torchvision.datasets.MNIST('./data/', train=False, download=True,
                                    transform=torchvision.transforms.Compose([
@@ -149,7 +154,7 @@ if __name__ == '__main__':
     momentum = 0.5  # Use this parameter with SDG optimizer.
     batch_size = 128
 
-    train_loader, test_loader = load_datasets()
+    train_loader, test_loader = load_datasets(rot_mnist=False)
 
     model = ModelZ2CNN().to(device)
     print_model_info()
