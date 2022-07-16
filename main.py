@@ -154,7 +154,7 @@ if __name__ == '__main__':
     momentum = 0.5  # Use this parameter with SDG optimizer.
     batch_size = 128
 
-    train_loader, test_loader = load_datasets(rot_mnist=False)
+    train_loader, test_loader = load_datasets(rot_mnist=True)
 
     model = ModelP4CNNP4().to(device)
     print_model_info()
@@ -166,4 +166,4 @@ if __name__ == '__main__':
 
     print('Evaluating model with rotated images...')
     history = evaluate_360deg()
-    plot_evaluation_history(eval_history=history, title='P4CNNP4 with MNIST')
+    plot_evaluation_history(eval_history=history, title='P4CNNP4 with ROT-MNIST')
