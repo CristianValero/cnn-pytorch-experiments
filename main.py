@@ -157,7 +157,7 @@ if __name__ == '__main__':
 
     train_loader, test_loader = load_datasets(rot_mnist=True)
 
-    model = ModelP4CNNP4().to(device)
+    model = ModelConvEq2D().to(device)
     print_model_info()
 
     ce_loss = nn.CrossEntropyLoss()
@@ -167,4 +167,4 @@ if __name__ == '__main__':
 
     print('Evaluating model with rotated images...')
     history = evaluate_360deg()
-    plot_evaluation_history(eval_history=history, title='P4CNNP4 with ROT-MNIST')
+    plot_evaluation_history(eval_history=history, title='ConvEq2D with MNIST')
