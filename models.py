@@ -14,16 +14,16 @@ class ModelZ2CNN(nn.Module):
     """
     def __init__(self):
         super(ModelZ2CNN, self).__init__()
-        self.cnn1 = nn.Conv2d(in_channels=1, out_channels=20, kernel_size=(3, 3))
-        self.cnn2 = nn.Conv2d(in_channels=20, out_channels=20, kernel_size=(3, 3))
+        self.cnn1 = nn.Conv2d(in_channels=1, out_channels=80, kernel_size=(3, 3))
+        self.cnn2 = nn.Conv2d(in_channels=80, out_channels=80, kernel_size=(3, 3))
         self.max1 = nn.MaxPool2d(kernel_size=2)
-        self.norm = nn.BatchNorm2d(20)
-        self.cnn3 = nn.Conv2d(in_channels=20, out_channels=20, kernel_size=(3, 3))
-        self.cnn4 = nn.Conv2d(in_channels=20, out_channels=20, kernel_size=(3, 3))
-        self.cnn5 = nn.Conv2d(in_channels=20, out_channels=20, kernel_size=(3, 3))
-        self.cnn6 = nn.Conv2d(in_channels=20, out_channels=20, kernel_size=(3, 3))
-        self.cnn7 = nn.Conv2d(in_channels=20, out_channels=20, kernel_size=(4, 4))
-        self.fc = nn.Linear(20, 10)
+        self.norm = nn.BatchNorm2d(80)
+        self.cnn3 = nn.Conv2d(in_channels=80, out_channels=80, kernel_size=(3, 3))
+        self.cnn4 = nn.Conv2d(in_channels=80, out_channels=80, kernel_size=(3, 3))
+        self.cnn5 = nn.Conv2d(in_channels=80, out_channels=80, kernel_size=(3, 3))
+        self.cnn6 = nn.Conv2d(in_channels=80, out_channels=80, kernel_size=(3, 3))
+        self.cnn7 = nn.Conv2d(in_channels=80, out_channels=80, kernel_size=(4, 4))
+        self.fc = nn.Linear(80, 10)
 
     def forward(self, x):
         x = functional.relu(self.cnn1(x))
@@ -75,31 +75,32 @@ class ModelP4CNNP4(nn.Module):
 
 
 class ModelConvEq2D(nn.Module):
-
+    # TODO: Gif bestia con todas las capas
+    # TODO: Y las capas de dos en dos con groups = 40. Fuera cnn7 y avgpool 4
     def __init__(self):
         super(ModelConvEq2D, self).__init__()
-        self.cnn1 = ConvEq2d(in_channels=1, out_channels=40, kernel_size=3)
-        self.cnn2 = ConvEq2d(in_channels=40, out_channels=40, kernel_size=3)
+        self.cnn1 = ConvEq2d(in_channels=1, out_channels=80, kernel_size=3)
+        self.cnn2 = ConvEq2d(in_channels=80, out_channels=80, kernel_size=3)
         self.max1 = nn.MaxPool2d(kernel_size=2)
-        self.norm = nn.BatchNorm2d(40)
-        self.cnn3 = ConvEq2d(in_channels=40, out_channels=40, kernel_size=3)
-        self.cnn4 = ConvEq2d(in_channels=40, out_channels=40, kernel_size=3)
-        self.cnn5 = ConvEq2d(in_channels=40, out_channels=40, kernel_size=3)
-        self.cnn6 = ConvEq2d(in_channels=40, out_channels=40, kernel_size=3)
-        self.cnn7 = ConvEq2d(in_channels=40, out_channels=40, kernel_size=4)
-        self.fc = nn.Linear(40, 10)
+        # self.norm = nn.BatchNorm2d(40)
+        self.cnn3 = ConvEq2d(in_channels=80, out_channels=80, kernel_size=3)
+        self.cnn4 = ConvEq2d(in_channels=80, out_channels=80, kernel_size=3)
+        self.cnn5 = ConvEq2d(in_channels=80, out_channels=80, kernel_size=3)
+        self.cnn6 = ConvEq2d(in_channels=80, out_channels=80, kernel_size=3)
+        self.cnn7 = ConvEq2d(in_channels=80, out_channels=80, kernel_size=4)
+        self.fc = nn.Linear(80, 10)
 
     def forward(self, x):
-        x = self.cnn1(x)
-        x = self.cnn2(x)
+        x = functional.relu(self.cnn1(x))
+        x = functional.relu(self.cnn2(x))
         x = functional.dropout(x)
-        x = self.norm(x)
-        x = self.max1(x)
-        x = self.cnn3(x)
-        x = self.cnn4(x)
-        x = self.cnn5(x)
-        x = self.cnn6(x)
-        x = self.cnn7(x)
+        # x = self.norm(x)
+        x = functional.relu(self.max1(x))
+        x = functional.relu(self.cnn3(x))
+        x = functional.relu(self.cnn4(x))
+        x = functional.relu(self.cnn5(x))
+        x = functional.relu(self.cnn6(x))
+        x = functional.relu(self.cnn7(x))
         x = x.view(x.size()[0], -1)
         x = self.fc(x)
         return x

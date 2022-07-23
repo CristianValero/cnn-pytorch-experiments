@@ -12,7 +12,7 @@ class Recorder:
         self.fps = fps
 
     def add_frame(self, fig, save=False):
-        fig.tight_layout(pad=0)
+        # fig.tight_layout(pad=0)
         fig.canvas.draw()
         image_from_plot = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
         image_from_plot = image_from_plot.reshape(fig.canvas.get_width_height()[::-1] + (3,))
