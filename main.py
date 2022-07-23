@@ -212,11 +212,12 @@ if __name__ == '__main__':
     epochs = 20
     learning_rate = 0.001
     batch_size = 128
-    train_model = False
+    train_model = True
     evaluate_model = True
     model_to_use = 1  # Modify this parameter to switch between the different models.
+    use_rot_mnist = False
 
-    train_loader, test_loader = load_datasets(rot_mnist=False)
+    train_loader, test_loader = load_datasets(rot_mnist=use_rot_mnist)
 
     model_path = f'./trained_models/{models[model_to_use]["name"]}.pt'
     if exists(model_path):
@@ -237,4 +238,5 @@ if __name__ == '__main__':
     if evaluate_model:
         print('Evaluating model with rotated images...')
         history = evaluate_360deg(model_name=models[model_to_use]["name"])
-        plot_evaluation_history(eval_history=history, title=f'{models[model_to_use]["name"]} with MNIST')
+        plot_evaluation_history(eval_history=history, title=f'{models[model_to_use]["name"]} with '
+                                                            f'{(f"MNIST", "ROT-MNIST")[use_rot_mnist]}')
