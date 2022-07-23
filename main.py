@@ -126,11 +126,16 @@ def evaluate_360deg(model_name):
                 total += y_ts.shape[0]
 
                 if first_image:
+                    # Plot the inspection of all layers.
                     fig, ax = plt.subplots(3, 8, dpi=150)
                     plt.suptitle(f'Model layers inspection with {model_name}', fontsize=15)
                     for i in range(3):
                         for layer in range(8):
                             ax[i, layer].set_title((f'cnn{layer}', 'input')[layer == 0])
+                            # if layer != 0:
+                            #     ax[i, layer].imshow(layers_inspection[layer][i, 0][0, :].cpu(), cmap='gray')
+                            # else:
+                            #     ax[i, layer].imshow(layers_inspection[layer][i, 0].cpu(), cmap='gray')
                             ax[i, layer].imshow(layers_inspection[layer][i, 0].cpu(), cmap='gray')
                             ax[i, layer].set_axis_off()
                     fig.tight_layout()
@@ -138,11 +143,12 @@ def evaluate_360deg(model_name):
                     # plt.show()
                     plt.close()
 
+                    # Plot the inspection cnn7 layer with 8x10 map -> 80 channels.
                     layers_inspection[7] = layers_inspection[7].flatten(1, 2)
                     layers_inspection[7] = layers_inspection[7].view(torch.Size([128, 10, 8]))
 
                     fig, ax = plt.subplots(3, 2, dpi=150)
-                    plt.suptitle(f'Output cnn7 from ConvEq2D model {deg}º', fontsize=15)
+                    plt.suptitle(f'Output cnn7 from {model_name} model {deg}º', fontsize=15)
                     for i in range(3):
                         ax[i, 0].imshow(layers_inspection[0][i, 0].cpu(), cmap='gray')
                         ax[i, 0].set_axis_off()
@@ -214,7 +220,7 @@ if __name__ == '__main__':
     batch_size = 128
     train_model = True
     evaluate_model = True
-    model_to_use = 1  # Modify this parameter to switch between the different models.
+    model_to_use = 3  # Modify this parameter to switch between the different models.
     use_rot_mnist = False
 
     train_loader, test_loader = load_datasets(rot_mnist=use_rot_mnist)
@@ -238,5 +244,5 @@ if __name__ == '__main__':
     if evaluate_model:
         print('Evaluating model with rotated images...')
         history = evaluate_360deg(model_name=models[model_to_use]["name"])
-        plot_evaluation_history(eval_history=history, title=f'{models[model_to_use]["name"]} with '
-                                                            f'{(f"MNIST", "ROT-MNIST")[use_rot_mnist]}')
+        # plot_evaluation_history(eval_history=history, title=f'{models[model_to_use]["name"]} with '
+        #                                                     f'{(f"MNIST", "ROT-MNIST")[use_rot_mnist]}')
