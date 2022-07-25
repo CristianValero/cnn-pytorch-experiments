@@ -132,10 +132,6 @@ def evaluate_360deg(model_name):
                     for i in range(3):
                         for layer in range(8):
                             ax[i, layer].set_title((f'cnn{layer}', 'input')[layer == 0])
-                            # if layer != 0:
-                            #     ax[i, layer].imshow(layers_inspection[layer][i, 0][0, :].cpu(), cmap='gray')
-                            # else:
-                            #     ax[i, layer].imshow(layers_inspection[layer][i, 0].cpu(), cmap='gray')
                             ax[i, layer].imshow(layers_inspection[layer][i, 0].cpu(), cmap='gray')
                             ax[i, layer].set_axis_off()
                     fig.tight_layout()
@@ -173,7 +169,7 @@ def evaluate_360deg(model_name):
     return evaluation_history
 
 
-def plot_evaluation_history(eval_history, title):
+def plot_evaluation_history(eval_history, title, model_name):
     max_acc = np.max(eval_history[:, 1])
     min_acc = np.min(eval_history[:, 1])
     fig, ax = plt.subplots(figsize=(10, 10), dpi=200)
@@ -190,7 +186,7 @@ def plot_evaluation_history(eval_history, title):
     ax.set_ylabel('accuracy')
     plt.suptitle(title)
     fig.tight_layout()
-    plt.savefig(f'./evaluation/eval_360deg_invariance.png', format='png', metadata=None, bbox_inches='tight',
+    plt.savefig(f'./evaluation/eval_360deg_{model_name}.png', format='png', metadata=None, bbox_inches='tight',
                 pad_inches=0.1)
     plt.show()
     plt.close(fig)
@@ -218,6 +214,7 @@ if __name__ == '__main__':
     epochs = 20
     learning_rate = 0.001
     batch_size = 128
+
     train_model = True
     evaluate_model = True
     model_to_use = 3  # Modify this parameter to switch between the different models.
@@ -244,5 +241,6 @@ if __name__ == '__main__':
     if evaluate_model:
         print('Evaluating model with rotated images...')
         history = evaluate_360deg(model_name=models[model_to_use]["name"])
-        # plot_evaluation_history(eval_history=history, title=f'{models[model_to_use]["name"]} with '
-        #                                                     f'{(f"MNIST", "ROT-MNIST")[use_rot_mnist]}')
+        plot_evaluation_history(eval_history=history, title=f'{models[model_to_use]["name"]} with '
+                                                            f'{(f"MNIST", "ROT-MNIST")[use_rot_mnist]}',
+                                model_name=models[model_to_use]["name"])
